@@ -4,6 +4,8 @@ import (
 	"net/http"
 )
 
+//go:generate mockery -name=HTTPClient -output=./tests/mockery/automock -outpkg=automock -case=underscore
+
 type (
 	// BasicAuth contains basic HTTP authentication credentials.
 	BasicAuth struct {
