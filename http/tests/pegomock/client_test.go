@@ -8,8 +8,8 @@ import (
 	"sync"
 	"testing"
 
-	bHTTP "github.com/mszostok/mocks-playground/internal/http"
-	"github.com/mszostok/mocks-playground/internal/http/tests/pegomock/automock"
+	bHTTP "github.com/mszostok/mocks-playground/http"
+	"github.com/mszostok/mocks-playground/http/tests/pegomock/automock"
 	. "github.com/petergtz/pegomock"
 	"github.com/stretchr/testify/assert"
 )

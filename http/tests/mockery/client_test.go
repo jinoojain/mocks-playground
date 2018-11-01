@@ -6,8 +6,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	bHTTP "github.com/mszostok/mocks-playground/internal/http"
-	"github.com/mszostok/mocks-playground/internal/http/tests/mockery/automock"
+	bHTTP "github.com/mszostok/mocks-playground/http"
+	"github.com/mszostok/mocks-playground/http/tests/mockery/automock"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"

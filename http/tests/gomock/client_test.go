@@ -8,8 +8,8 @@ import (
 	"testing"
 
 	"github.com/golang/mock/gomock"
-	bHTTP "github.com/mszostok/mocks-playground/internal/http"
-	"github.com/mszostok/mocks-playground/internal/http/tests/gomock/automock"
+	bHTTP "github.com/mszostok/mocks-playground/http"
+	"github.com/mszostok/mocks-playground/http/tests/gomock/automock"
 	"github.com/stretchr/testify/assert"
 )
 
