@@ -6,16 +6,14 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	chttp "github.com/mszostok/mocks-playground/internal/http"
+	bHTTP "github.com/mszostok/mocks-playground/internal/http"
 	"github.com/mszostok/mocks-playground/internal/http/tests/mockery/automock"
-	. "github.com/petergtz/pegomock"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 )
 
 func TestDoerWithBasicAuthDo(t *testing.T) {
-	RegisterMockTestingT(t)
 	tests := map[string]struct {
 		expResp *http.Response
 		fixErr  error
@@ -51,7 +49,7 @@ func TestDoerWithBasicAuthDo(t *testing.T) {
 				assert.Equal(t, fixPass, gotPassword, "password mismatch")
 			}).Return(tc.expResp, tc.fixErr).Once()
 
-			cli := chttp.NewClientWithBasicAuth(chttp.BasicAuth{Username: fixUser, Password: fixPass}).
+			cli := bHTTP.NewClientWithBasicAuth(bHTTP.BasicAuth{Username: fixUser, Password: fixPass}).
 				WithClient(clientMock)
 
 			// when

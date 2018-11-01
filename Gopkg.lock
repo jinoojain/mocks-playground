@@ -8,13 +8,18 @@
   version = "v1.1.1"
 
 [[projects]]
+  name = "github.com/golang/mock"
+  packages = ["gomock"]
+  revision = "c34cdb4725f4c3844d095133c6e40e448b86589b"
+  version = "v1.1.1"
+
+[[projects]]
   name = "github.com/onsi/gomega"
   packages = ["format"]
   revision = "7615b9433f86a8bdf29709bf288bc4fd0636a369"
   version = "v1.4.2"
 
 [[projects]]
-  branch = "master"
   name = "github.com/petergtz/pegomock"
   packages = [
     ".",
@@ -44,9 +49,15 @@
   revision = "f35b8ab0b5a2cef36673838d662e249dd9c94686"
   version = "v1.2.2"
 
+[[projects]]
+  branch = "master"
+  name = "golang.org/x/net"
+  packages = ["context"]
+  revision = "e11730110bbd884bbf19550bfafe9d69519ce29e"
+
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "e3ce235ab129aa88f17e73a589ab79199f104bd14ffe37b76058caf7501c2e5b"
+  inputs-digest = "1629b085473d835879000d508e01d613438a0d7c25bfbc4e6a4ff8db427887bd"
   solver-name = "gps-cdcl"
   solver-version = 1

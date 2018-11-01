@@ -5,17 +5,15 @@ import (
 	"fmt"
 	"net/http"
 	"net/http/httptest"
-	"sync"
 	"testing"
 
+	"github.com/golang/mock/gomock"
 	bHTTP "github.com/mszostok/mocks-playground/internal/http"
-	"github.com/mszostok/mocks-playground/internal/http/tests/pegomock/automock"
-	. "github.com/petergtz/pegomock"
+	"github.com/mszostok/mocks-playground/internal/http/tests/gomock/automock"
 	"github.com/stretchr/testify/assert"
 )
 
-func TestDoerWithBasicAuthDo(t *testing.T) {
-	RegisterMockTestingT(t)
+func TestDoerWithBasicAuthDo_use_gomock(t *testing.T) {
 	tests := map[string]struct {
 		expResp *http.Response
 		fixErr  error
@@ -39,12 +37,16 @@ func TestDoerWithBasicAuthDo(t *testing.T) {
 				fixPass = "pass"
 			)
 
-			clientMock := automock.NewMockHTTPClient()
-			When(clientMock.Do(EqReqAuth(fixUser, fixPass))).
-				ThenReturn(tc.expResp, tc.fixErr)
+			mockCtrl := gomock.NewController(t)
+			defer mockCtrl.Finish()
+
+			mockObj := automock.NewMockHTTPClient(mockCtrl)
+			mockObj.EXPECT().
+				Do(EqReqAuthMatcher(fixUser, fixPass)).
+				Return(tc.expResp, tc.fixErr)
 
 			cli := bHTTP.NewClientWithBasicAuth(bHTTP.BasicAuth{Username: fixUser, Password: fixPass}).
-				WithClient(clientMock)
+				WithClient(mockObj)
 
 			// when
 			gotResp, gotErr := cli.Do(fixReq)
@@ -63,35 +65,22 @@ func fixResponse(status int) *http.Response {
 	return respRec.Result()
 }
 
-func EqReqAuth(user, pass string) *http.Request {
-	RegisterMatcher(&ReqAuthMatcher{expUsername: user, expPassword: pass})
-	var nullValue *http.Request
-	return nullValue
+func EqReqAuthMatcher(user, pass string) *ReqAuthMatcher {
+	return &ReqAuthMatcher{user, pass}
 }
 
 type ReqAuthMatcher struct {
 	expUsername, expPassword string
-	gotUsername, gotPassword string
-	sync.Mutex
 }
 
-func (m *ReqAuthMatcher) Matches(param Param) bool {
-	m.Lock()
-	defer m.Unlock()
-
-	req := param.(*http.Request)
-	var credsProvided bool
-	m.gotUsername, m.gotPassword, credsProvided = req.BasicAuth()
+func (m *ReqAuthMatcher) Matches(in interface{}) bool {
+	req := in.(*http.Request)
+	gotUser, gotPass, credsProvided := req.BasicAuth()
 
 	return credsProvided &&
-		m.expPassword == m.gotPassword && m.expUsername == m.gotUsername
-}
-
-func (m *ReqAuthMatcher) FailureMessage() string {
-	return fmt.Sprintf("Expected user: %s and password:  but got user: %s and password: %s",
-		m.expUsername, m.gotUsername, m.gotPassword)
+		m.expPassword == gotPass && m.expUsername == gotUser
 }
 
 func (m *ReqAuthMatcher) String() string {
-	return fmt.Sprintf("Eq(%s,%s)", m.expUsername, m.expPassword)
+	return fmt.Sprintf("basic auth is set [user: %s pass: %s]", m.expUsername, m.expPassword)
 }

@@ -1,11 +1,14 @@
-# Pkg do not provied versioning, need to be hardcode by commit sha
-[[constraint]]
+[[constraint]] # Pkg do not provied versioning, need to be hardcode by commit sha
   revision = "9750219ad78bfad9ba455ed537b518397a675228"
   name = "github.com/petergtz/pegomock"
 
 [[constraint]]
   name = "github.com/stretchr/testify"
   version = "1.2.2"
+
+[[constraint]]
+  name = "github.com/golang/mock"
+  version = "v1.1.1"
 
 [prune]
   go-tests = true
