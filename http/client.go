@@ -41,6 +41,7 @@ func (c *ClientWithBasicAuth) Do(req *http.Request) (*http.Response, error) {
 	return c.httpClient.Do(req)
 }
 
+// WithClient sets the http client.
 func (c *ClientWithBasicAuth) WithClient(client HTTPClient) *ClientWithBasicAuth {
 	c.httpClient = client
 	return c
