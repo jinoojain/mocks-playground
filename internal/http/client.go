@@ -5,6 +5,7 @@ import (
 )
 
 //go:generate mockery -name=HTTPClient -output=./tests/mockery/automock -outpkg=automock -case=underscore
+//go:generate pegomock generate HTTPClient --package automock --output=./tests/pegomock/automock/http_client_mock.go
 
 type (
 	// BasicAuth contains basic HTTP authentication credentials.

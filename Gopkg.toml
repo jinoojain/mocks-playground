@@ -1,5 +1,6 @@
+# Pkg do not provied versioning, need to be hardcode by commit sha
 [[constraint]]
-  branch = "master"
+  revision = "9750219ad78bfad9ba455ed537b518397a675228"
   name = "github.com/petergtz/pegomock"
 
 [[constraint]]
